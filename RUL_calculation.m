@@ -4,10 +4,10 @@ table_data = load("train_FD001.txt");
 
 % Extract all data for column1(engineId) and column2(cycle count) 
 iteration = table_data(:, 1);
-time = table_data(:, 2);
+cycle_count = table_data(:, 2);
 
 % Initialize RUL vector preallocating with zeros
-RUL = zeros(size(time));
+RUL = zeros(size(cycle_count));
 
 % filter engine IDs
 unique_engines = unique(iteration);
@@ -20,16 +20,16 @@ for i = 1:length(unique_engines)
     engine_indices = find(iteration == engine_id);
 
     % Determine the last cycle after which failure occurs
-    max_cycle = max(time(engine_indices));
+    max_cycle = max(cycle_count(engine_indices));
 
     % Calculate RUL for all cycles of this engine
-    RUL(engine_indices) = max_cycle - time(engine_indices);
+    RUL(engine_indices) = max_cycle - cycle_count(engine_indices);
     
     % Print the first 50 cycles for the each engine
     fprintf('RUL for first 50 Cycles for Engine ID %d:\n', engine_id);
     for cycle_idx = 1:min(50, length(engine_indices)) 
-        % tracking current urrent cycle number
-        current_cycle = time(engine_indices(cycle_idx)); 
+        % tracking current cycle number
+        current_cycle = cycle_count(engine_indices(cycle_idx)); 
         % tracking current RUL
         current_RUL = RUL(engine_indices(cycle_idx));  
         

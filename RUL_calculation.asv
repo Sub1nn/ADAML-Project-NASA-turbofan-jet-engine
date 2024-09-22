@@ -4,7 +4,7 @@ table_data = load("train_FD001.txt");
 
 % Extract all data for column1(engineId) and column2(cycle count) 
 iteration = table_data(:, 1);
-time = table_data(:, 2);
+tc = table_data(:, 2);
 
 % Initialize RUL vector preallocating with zeros
 RUL = zeros(size(time));
@@ -37,7 +37,7 @@ for i = 1:length(unique_engines)
         fprintf('Cycle %d: Engine ID %d, RUL: %d\n', current_cycle, engine_id, current_RUL);
     end
     
-    fprintf('\n'); % Add a new line between engines for better readability
+    fprintf('\n'); % Adds a new line between engines for better readability
 end
 
 % Plot of the first 50 RUL values with circle markers at each data point
