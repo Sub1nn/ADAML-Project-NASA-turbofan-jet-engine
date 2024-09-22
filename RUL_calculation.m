@@ -22,27 +22,22 @@ for i = 1:length(unique_engines)
     % Determine the last cycle after which failure occurs
     max_cycle = max(time(engine_indices));
 
-    % calculate RUL for all cycles of this engine
+    % Calculate RUL for all cycles of this engine
     RUL(engine_indices) = max_cycle - time(engine_indices);
-end
-
-% loop through first 50 cycles for each engine and print the current 
-% cycle number, engine ID and RUL
-
-disp('First 50 RUL values with Engine IDs:');
-% Initialize a cycle counter
-current_cycle = 0; 
-for idx = 1:length(RUL)
-    if idx > 1 && iteration(idx) ~= iteration(idx - 1)
-        current_cycle = 0; % Reset the cycle counter when engine ID changes
+    
+    % Print the first 50 cycles for the each engine
+    fprintf('RUL for first 50 Cycles for Engine ID %d:\n', engine_id);
+    for cycle_idx = 1:min(50, length(engine_indices)) 
+        % tracking current urrent cycle number
+        current_cycle = time(engine_indices(cycle_idx)); 
+        % tracking current RUL
+        current_RUL = RUL(engine_indices(cycle_idx));  
+        
+        % Print the cycle number, engine ID, and RUL
+        fprintf('Cycle %d: Engine ID %d, RUL: %d\n', current_cycle, engine_id, current_RUL);
     end
     
-    current_cycle = current_cycle + 1; % Increment the cycle count for the current engine
-    fprintf('Cycle %d: Engine ID %d, RUL: %d\n', current_cycle, iteration(idx), RUL(idx));
-    
-    if current_cycle >= 100  % Stop after printing the first 50 cycles
-        break;
-    end
+    fprintf('\n'); % Adds a new line between engines for better readability
 end
 
 % Plot of the first 50 RUL values with circle markers at each data point
