@@ -1,4 +1,6 @@
 clear; close all; clc
+%% 
+
 
 table_data = load("train_FD001.txt");
 
